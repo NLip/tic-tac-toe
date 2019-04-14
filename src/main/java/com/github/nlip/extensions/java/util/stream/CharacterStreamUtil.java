@@ -1,4 +1,4 @@
-package com.github.nlip.java.extensions.java.util.stream;
+package com.github.nlip.extensions.java.util.stream;
 
 import java.util.stream.IntStream;
 import java.util.stream.Stream;

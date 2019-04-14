@@ -1,4 +1,4 @@
-package com.github.nlip.java.extensions.java.util.stream;
+package com.github.nlip.extensions.java.util.stream;
 
 import static java.util.stream.Stream.concat;
 
