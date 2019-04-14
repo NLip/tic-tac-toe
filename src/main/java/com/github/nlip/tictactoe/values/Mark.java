@@ -1,5 +1,6 @@
 package com.github.nlip.tictactoe.values;
 
-public interface Figure {
-
+public enum Mark {
+  X,
+  O,
 }

@@ -6,11 +6,11 @@ import lombok.Value;
 
 @Value
 @AllArgsConstructor(staticName = "of")
-public class Column implements Eq<Column>, Comparable<Column>{
-    Integer x;
+public class Column implements Eq<Column>, Comparable<Column> {
+  Integer x;
 
-    @Override
-    public int compareTo(Column o) {
-        return x.compareTo(o.x);
-    }
+  @Override
+  public int compareTo(Column o) {
+    return x.compareTo(o.x);
+  }
 }
