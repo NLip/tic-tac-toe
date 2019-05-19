@@ -1,4 +1,4 @@
-package com.github.nlip.tictactoe;
+package com.github.nlip.tictactoe.computation.persist;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.argThat;
@@ -6,7 +6,6 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.github.nlip.tictactoe.computation.persist.BoardPersister;
 import com.github.nlip.tictactoe.values.Board;
 import com.github.nlip.tictactoe.values.Mark;
 import com.github.nlip.tictactoe.values.Position;

@@ -21,10 +21,10 @@ public class Board implements Eq<Board> {
     return Optional.ofNullable(marks.get(position));
   }
 
-  public Board withMark(Position position, Mark mark) {
-    var newSquares = new HashMap<>(marks);
-    newSquares.put(position, mark);
-    return Board.of(size, newSquares);
+  public Board putMark(Position position, Mark mark) {
+    var newMarks = new HashMap<>(marks);
+    newMarks.put(position, mark);
+    return Board.of(size, newMarks);
   }
 
   public Stream<Row> getRows() {
@@ -50,5 +50,9 @@ public class Board implements Eq<Board> {
   public boolean contains(Position p) {
     return inRangeClosed(1, size, p.getColumn().getX())
         && inRangeClosed(1, size, p.getRow().getY());
+  }
+
+  public boolean isFull() {
+    return marks.size() >= size * size;
   }
 }

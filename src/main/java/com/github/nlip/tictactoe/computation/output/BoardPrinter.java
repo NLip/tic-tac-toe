@@ -8,7 +8,7 @@ import static lombok.AccessLevel.PRIVATE;
 import com.github.nlip.tictactoe.values.Board;
 import com.github.nlip.tictactoe.values.Position;
 import com.github.nlip.tictactoe.values.Row;
-import com.github.nlip.tictactoe.wrappers.StringOutputter;
+import com.github.nlip.tictactoe.wrappers.UserInterface;
 import java.util.List;
 import java.util.function.Function;
 import javax.inject.Inject;
@@ -16,10 +16,10 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor(onConstructor = @__(@Inject), access = PRIVATE)
 public class BoardPrinter {
-  private final StringOutputter stringOutputter;
+  private final UserInterface userInterface;
 
   public void print(Board b) {
-    stringOutputter.printToConsole(asString(b));
+    userInterface.printToConsole(asString(b));
   }
 
   private static List<String> asString(Board board) {

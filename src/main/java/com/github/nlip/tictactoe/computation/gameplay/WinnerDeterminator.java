@@ -3,6 +3,7 @@ package com.github.nlip.tictactoe.computation.gameplay;
 import static java.lang.String.format;
 import static java.util.Optional.empty;
 import static java.util.stream.Collectors.toList;
+import static lombok.AccessLevel.PRIVATE;
 
 import com.github.nlip.tictactoe.values.Board;
 import com.github.nlip.tictactoe.values.Column;
@@ -12,9 +13,11 @@ import com.github.nlip.tictactoe.values.Row;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Stream;
+import javax.inject.Inject;
 import lombok.AllArgsConstructor;
 import lombok.Value;
 
+@AllArgsConstructor(onConstructor = @__(@Inject), access = PRIVATE)
 public class WinnerDeterminator {
 
   public Optional<Mark> determineWinner(Board board) {

@@ -1,12 +1,11 @@
-package com.github.nlip.tictactoe;
+package com.github.nlip.tictactoe.computation.output;
 
 import static org.mockito.Mockito.verify;
 
-import com.github.nlip.tictactoe.computation.output.BoardPrinter;
 import com.github.nlip.tictactoe.values.Board;
 import com.github.nlip.tictactoe.values.Mark;
 import com.github.nlip.tictactoe.values.Position;
-import com.github.nlip.tictactoe.wrappers.StringOutputter;
+import com.github.nlip.tictactoe.wrappers.UserInterface;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +16,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 public class BoardPrinterTest {
-  @Mock StringOutputter stringOutputter;
+  @Mock UserInterface userInterface;
   @InjectMocks BoardPrinter boardPrinter;
 
   @BeforeEach
@@ -47,7 +46,7 @@ public class BoardPrinterTest {
 
       boardPrinter.print(board);
 
-      verify(stringOutputter).printToConsole(expectedStrings);
+      verify(userInterface).printToConsole(expectedStrings);
     }
   }
 }
