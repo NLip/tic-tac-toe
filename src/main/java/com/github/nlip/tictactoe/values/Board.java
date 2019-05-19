@@ -1,7 +1,9 @@
 package com.github.nlip.tictactoe.values;
 
+import static com.github.nlip.extensions.java.lang.integer.IntegerUtil.inRangeClosed;
 import static java.util.stream.IntStream.rangeClosed;
 
+import com.github.nlip.extensions.java.lang.object.Eq;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -11,7 +13,7 @@ import lombok.Value;
 
 @Value
 @AllArgsConstructor(staticName = "of")
-public class Board {
+public class Board implements Eq<Board> {
   Integer size;
   Map<Position, Mark> marks;
 
@@ -31,5 +33,22 @@ public class Board {
 
   public Stream<Column> getColumns() {
     return rangeClosed(1, size).mapToObj(Column::of);
+  }
+
+  public Column getFirstColumn() {
+    return Column.of(1);
+  }
+
+  public Row getFirstRow() {
+    return Row.of(1);
+  }
+
+  public Row getLastRow() {
+    return Row.of(size);
+  }
+
+  public boolean contains(Position p) {
+    return inRangeClosed(1, size, p.getColumn().getX())
+        && inRangeClosed(1, size, p.getRow().getY());
   }
 }

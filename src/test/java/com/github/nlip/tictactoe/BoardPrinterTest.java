@@ -2,6 +2,7 @@ package com.github.nlip.tictactoe;
 
 import static org.mockito.Mockito.verify;
 
+import com.github.nlip.tictactoe.computation.output.BoardPrinter;
 import com.github.nlip.tictactoe.values.Board;
 import com.github.nlip.tictactoe.values.Mark;
 import com.github.nlip.tictactoe.values.Position;

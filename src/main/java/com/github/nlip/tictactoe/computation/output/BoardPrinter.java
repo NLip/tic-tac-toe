@@ -1,4 +1,4 @@
-package com.github.nlip.tictactoe;
+package com.github.nlip.tictactoe.computation.output;
 
 import static com.github.nlip.extensions.java.util.stream.StreamUtil.intersperse;
 import static java.util.stream.Collectors.joining;

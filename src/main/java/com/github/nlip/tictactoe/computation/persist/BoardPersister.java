@@ -1,4 +1,4 @@
-package com.github.nlip.tictactoe.computation;
+package com.github.nlip.tictactoe.computation.persist;
 
 import static lombok.AccessLevel.PRIVATE;
 

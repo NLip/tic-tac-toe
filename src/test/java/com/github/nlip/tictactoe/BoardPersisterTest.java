@@ -5,7 +5,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.github.nlip.tictactoe.computation.BoardPersister;
+import com.github.nlip.tictactoe.computation.persist.BoardPersister;
 import com.github.nlip.tictactoe.values.Board;
 import com.github.nlip.tictactoe.values.Mark;
 import com.github.nlip.tictactoe.values.Position;
@@ -49,9 +49,9 @@ class BoardPersisterTest {
           + "\"marks\":{"
           + "\"1,3\":\"O\","
           + "\"2,2\":\"X\","
-          + "\"3,2\":\"O\","
+          + "\"3,2\":\"O\""
           + "},"
-          + "\"size\":3,"
+          + "\"size\":3"
           + "}";
 
   @BeforeEach

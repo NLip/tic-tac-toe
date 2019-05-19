@@ -10,7 +10,7 @@ public class Position implements Eq<Position> {
   Column column;
   Row row;
 
-  public static Position fromInts(int column, int row) {
+  public static Position fromInts(Integer column, Integer row) {
     return of(Column.of(column), Row.of(row));
   }
 }
