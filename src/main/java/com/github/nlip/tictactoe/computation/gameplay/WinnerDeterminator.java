@@ -65,9 +65,9 @@ public class WinnerDeterminator {
     return Stream.iterate(
         first,
         position ->
-            Position.fromInts(
-                position.getColumn().getX() + offset.getX(),
-                position.getRow().getY() + offset.getY()));
+            Position.of(
+                position.getColumn().addOffset(offset.getX()),
+                position.getRow().addOffset(offset.getY())));
   }
 
   @Value

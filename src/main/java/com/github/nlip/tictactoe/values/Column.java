@@ -13,4 +13,8 @@ public class Column implements Eq<Column>, Comparable<Column> {
   public int compareTo(Column o) {
     return x.compareTo(o.x);
   }
+
+  public Column addOffset(Integer offset) {
+    return Column.of(x + offset);
+  }
 }

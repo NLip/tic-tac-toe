@@ -2,7 +2,6 @@ package com.github.nlip.tictactoe.computation.persist;
 
 import static lombok.AccessLevel.PRIVATE;
 
-import com.github.nlip.tictactoe.computation.typeadapters.PositionTypeAdapter;
 import com.github.nlip.tictactoe.values.Board;
 import com.github.nlip.tictactoe.values.Position;
 import com.github.nlip.tictactoe.wrappers.FilePersister;

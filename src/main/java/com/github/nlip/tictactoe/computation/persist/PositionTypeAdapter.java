@@ -1,4 +1,4 @@
-package com.github.nlip.tictactoe.computation.typeadapters;
+package com.github.nlip.tictactoe.computation.persist;
 
 import static java.util.stream.Collectors.toList;
 

@@ -13,4 +13,8 @@ public class Row implements Eq<Row>, Comparable<Row> {
   public int compareTo(Row o) {
     return y.compareTo(o.y);
   }
+
+  public Row addOffset(Integer offset) {
+    return Row.of(y + offset);
+  }
 }
