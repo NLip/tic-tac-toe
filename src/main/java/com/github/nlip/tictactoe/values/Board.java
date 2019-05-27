@@ -47,7 +47,7 @@ public class Board implements Eq<Board> {
     return Row.of(size);
   }
 
-  public boolean contains(Position p) {
+  public boolean isInBounds(Position p) {
     return inRangeClosed(1, size, p.getColumn().getX())
         && inRangeClosed(1, size, p.getRow().getY());
   }

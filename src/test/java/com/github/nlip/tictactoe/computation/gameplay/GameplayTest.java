@@ -9,6 +9,7 @@ import static org.mockito.Mockito.when;
 import com.github.nlip.tictactoe.computation.output.BoardPrinter;
 import com.github.nlip.tictactoe.values.Board;
 import com.github.nlip.tictactoe.values.Game;
+import com.github.nlip.tictactoe.values.Game.Mode;
 import com.github.nlip.tictactoe.values.Mark;
 import com.github.nlip.tictactoe.values.Position;
 import com.github.nlip.tictactoe.wrappers.UserInterface;
@@ -30,9 +31,9 @@ class GameplayTest {
   @InjectMocks Gameplay gameplay;
 
   Board emptyBoard = Board.of(1, Map.of());
-  Game emptyGame = Game.of(emptyBoard, Mark.X);
+  Game emptyGame = Game.of(emptyBoard, Mark.X, Mode.PLAY);
   Board fullBoard = Board.of(1, Map.of(Position.fromInts(1, 1), Mark.X));
-  Game fullGame = Game.of(fullBoard, Mark.O);
+  Game fullGame = Game.of(fullBoard, Mark.O, Mode.PLAY);
 
   @BeforeEach
   void init() {

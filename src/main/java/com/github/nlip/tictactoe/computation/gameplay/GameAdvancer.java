@@ -7,10 +7,17 @@ import static lombok.AccessLevel.PRIVATE;
 
 import com.github.nlip.tictactoe.computation.input.PositionParser;
 import com.github.nlip.tictactoe.computation.output.BoardPrinter;
-import com.github.nlip.tictactoe.values.Board;
+import com.github.nlip.tictactoe.computation.persist.BoardPersister;
+import com.github.nlip.tictactoe.values.Action;
+import com.github.nlip.tictactoe.values.Action.Invalid;
+import com.github.nlip.tictactoe.values.Action.Move;
+import com.github.nlip.tictactoe.values.Action.Quit;
+import com.github.nlip.tictactoe.values.Action.Save;
 import com.github.nlip.tictactoe.values.Game;
+import com.github.nlip.tictactoe.values.Game.Mode;
 import com.github.nlip.tictactoe.values.Position;
 import com.github.nlip.tictactoe.wrappers.UserInterface;
+import java.util.InputMismatchException;
 import javax.inject.Inject;
 import lombok.AllArgsConstructor;
 
@@ -19,42 +26,70 @@ public class GameAdvancer {
   private final UserInterface userInterface;
   private final PositionParser positionParser;
   private final BoardPrinter boardPrinter;
+  private final BoardPersister boardPersister;
 
   public Game advance(Game game) {
+    boardPrinter.print(game.getBoard());
+    userInterface.printToConsole(format("Player %s.", game.getCurrentPlayer()));
+
+    var action = askForAction(game);
+    return handleAction(game, action);
+  }
+
+  private Action askForAction(Game game) {
+    userInterface.printToConsole(
+        "Enter unoccupied position (x,y) or type 'quit' or 'save' to abort the current game");
+    var input = userInterface.readFromConsole();
+    if (input.toLowerCase().equals("quit")) {
+      return Action.quit();
+    }
+    if (input.toLowerCase().equals("save")) {
+      return Action.save();
+    }
+
+    Position position;
+    try {
+      position = positionParser.parse(input);
+    } catch (InputMismatchException | NumberFormatException e) {
+      return Action.invalid(format("Invalid input %s.", input));
+    }
+
+    if (!game.getBoard().isInBounds(position)) {
+      return Action.invalid(format("Position %s is outside the board.", input));
+    }
+    if (game.getBoard().getMark(position).isPresent()) {
+      return Action.invalid(
+          format(
+              "Cheater! Position (%s,%s) is already occupied!",
+              position.getColumn().getX(), position.getRow().getY()));
+    }
+    return Action.move(position);
+  }
+
+  private Game handleAction(Game game, Action action) {
     var board = game.getBoard();
     var currentPlayer = game.getCurrentPlayer();
 
-    boardPrinter.print(board);
-    userInterface.printToConsole(format("Player %s. Enter your position.", currentPlayer));
-
-    var position = getPosition(board);
-    return Game.of(board.putMark(position, currentPlayer), currentPlayer.eq(X) ? O : X);
-  }
-
-  private Position getPosition(Board board) {
-    while (true) {
-      var input = userInterface.readFromConsole();
-      try {
-        var position = positionParser.parse(input);
-        if (board.getMark(position).isEmpty()) {
-          return position;
-        }
-        moveNotAllowed(position);
-      } catch (Exception e) {
-        invalidInput(input);
-      }
+    if (action instanceof Quit) {
+      return Game.of(board, currentPlayer, Mode.QUIT);
     }
-  }
+    if (action instanceof Save) {
+      boardPersister.store(game.getBoard()); // TODO: Whose turn will it be after load??
+      return handleAction(game, Action.quit());
+    }
+    if (action instanceof Move) {
+      return Game.of(
+          board.putMark(((Move) action).getPosition(), currentPlayer),
+          currentPlayer.eq(X) ? O : X,
+          game.getMode());
+    }
+    if (action instanceof Invalid) {
+      userInterface.printToConsole(((Invalid) action).getReason());
+      userInterface.printToConsole("Try again!");
+      var nextAction = askForAction(game);
+      return handleAction(game, nextAction);
+    }
 
-  private void invalidInput(String input) {
-    userInterface.printToConsole(
-        format("Invalid input %s. Try again. Enter unoccupied position (x,y)", input));
-  }
-
-  private void moveNotAllowed(Position position) {
-    userInterface.printToConsole(
-        format(
-            "Cheater! Position (%s,%s) is already occupied! Try again!",
-            position.getColumn().getX(), position.getRow().getY()));
+    throw new IllegalStateException(format("Unexpected Action %s", action));
   }
 }

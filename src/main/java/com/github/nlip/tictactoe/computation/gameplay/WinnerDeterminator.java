@@ -60,7 +60,7 @@ public class WinnerDeterminator {
 
   private static Optional<Mark> determineLineWinner(Board board, Stream<Position> line) {
     var distinctMarks =
-        line.takeWhile(board::contains).map(board::getMark).distinct().collect(toList());
+        line.takeWhile(board::isInBounds).map(board::getMark).distinct().collect(toList());
     return distinctMarks.size() == 1 ? distinctMarks.get(0) : empty();
   }
 

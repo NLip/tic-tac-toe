@@ -9,4 +9,10 @@ import lombok.Value;
 public class Game implements Eq<Game> {
   Board board;
   Mark currentPlayer;
+  Mode mode;
+
+  public enum Mode {
+    PLAY,
+    QUIT,
+  }
 }
