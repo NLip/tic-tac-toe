@@ -7,6 +7,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.github.nlip.tictactoe.values.Board;
+import com.github.nlip.tictactoe.values.Game;
+import com.github.nlip.tictactoe.values.Game.Mode;
 import com.github.nlip.tictactoe.values.Mark;
 import com.github.nlip.tictactoe.values.Position;
 import com.github.nlip.tictactoe.wrappers.FilePersister;
@@ -33,24 +35,31 @@ class BoardPersisterTest {
 
   LocalDateTime timestamp = LocalDateTime.of(2018, 1, 5, 21, 12, 0);
   String basePath = "foo";
-  String fileName = "board_2018-01-05--21-12-00.json";
+  String fileName = "game_2018-01-05--21-12-00.json";
   Path path = Path.of(basePath, "savegames", fileName);
-  Board board =
-      Board.of(
-          3,
-          Map.of(
-              Position.fromInts(1, 3), Mark.O,
-              Position.fromInts(2, 2), Mark.X,
-              Position.fromInts(3, 2), Mark.O));
+  Game game =
+      Game.of(
+          Board.of(
+              3,
+              Map.of(
+                  Position.fromInts(1, 3), Mark.O,
+                  Position.fromInts(2, 2), Mark.X,
+                  Position.fromInts(3, 2), Mark.O)),
+          Mark.X,
+          Mode.PLAY);
 
   String json =
       "{"
+          + "\"board\":{"
           + "\"marks\":{"
           + "\"1,3\":\"O\","
           + "\"2,2\":\"X\","
           + "\"3,2\":\"O\""
           + "},"
           + "\"size\":3"
+          + "},"
+          + "\"currentPlayer\": \"X\","
+          + "\"mode\": \"PLAY\""
           + "}";
 
   @BeforeEach
@@ -64,7 +73,7 @@ class BoardPersisterTest {
   class Store {
     @Test
     void shouldPassJsonToFilePersister() {
-      boardPersister.store(board);
+      boardPersister.store(game);
 
       verify(filePersister).write(eq(path), argThat(matchesJson(json)));
     }
@@ -81,7 +90,7 @@ class BoardPersisterTest {
     void shouldLoadBoardFromFilePersister() {
       var result = boardPersister.load(fileName);
 
-      assertThat(result).isEqualTo(board);
+      assertThat(result).isEqualTo(game);
     }
   }
 

@@ -74,7 +74,7 @@ public class GameAdvancer {
       return Game.of(board, currentPlayer, Mode.QUIT);
     }
     if (action instanceof Save) {
-      boardPersister.store(game.getBoard()); // TODO: Whose turn will it be after load??
+      boardPersister.store(game);
       return handleAction(game, Action.quit());
     }
     if (action instanceof Move) {

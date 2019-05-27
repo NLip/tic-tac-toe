@@ -2,7 +2,7 @@ package com.github.nlip.tictactoe.computation.persist;
 
 import static lombok.AccessLevel.PRIVATE;
 
-import com.github.nlip.tictactoe.values.Board;
+import com.github.nlip.tictactoe.values.Game;
 import com.github.nlip.tictactoe.values.Position;
 import com.github.nlip.tictactoe.wrappers.FilePersister;
 import com.github.nlip.tictactoe.wrappers.SystemConfig;
@@ -29,17 +29,17 @@ public class BoardPersister {
   private final Time time;
   private final SystemConfig config;
 
-  public void store(Board board) {
+  public void store(Game game) {
     Path path = Path.of(config.getBasePath(), "savegames", createFileName());
-    filePersister.write(path, gson.toJson(board));
+    filePersister.write(path, gson.toJson(game));
   }
 
-  public Board load(String fileName) {
+  public Game load(String fileName) {
     var json = filePersister.read(Path.of(config.getBasePath(), "savegames", fileName));
-    return gson.fromJson(json, Board.class);
+    return gson.fromJson(json, Game.class);
   }
 
   private String createFileName() {
-    return "board_" + time.now().format(FORMAT) + ".json";
+    return "game_" + time.now().format(FORMAT) + ".json";
   }
 }
